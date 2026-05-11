@@ -35,6 +35,7 @@ export default function TrackingWidget() {
 
   return (
     <section
+      id="trackingwidget"
       ref={sectionRef}
       className="relative overflow-hidden bg-gradient-to-br from-blue-600 via-blue-700 to-blue-800 py-16 sm:py-24"
     >

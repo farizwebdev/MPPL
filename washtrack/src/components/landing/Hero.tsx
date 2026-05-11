@@ -163,7 +163,7 @@ export default function Hero() {
               }}
             >
               <Link
-                href="/tracking"
+                href="#trackingwidget"
                 className="group flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-7 py-3 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md sm:w-auto"
               >
                 Lacak Cucian Anda
