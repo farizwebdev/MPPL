@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { LogoIcon } from "./Icons";
 
 const navLinks = [
@@ -11,11 +11,23 @@ const navLinks = [
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const prevScrollY = useRef(0);
 
   useEffect(() => {
     function onScroll() {
-      setScrolled(window.scrollY > 20);
+      const currentY = window.scrollY;
+      const isScrolled = currentY > 20;
+
+      if (currentY > 60 && currentY > prevScrollY.current) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+
+      setScrolled(isScrolled);
+      prevScrollY.current = currentY;
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -24,6 +36,8 @@ export default function Navbar() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      } ${
         scrolled
           ? "bg-white/80 shadow-xs backdrop-blur-xl"
           : "bg-transparent"

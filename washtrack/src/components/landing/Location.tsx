@@ -132,10 +132,10 @@ export default function Location() {
 
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="text-center">
-          <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Kunjungi Kami
           </h2>
-          <p className="mt-2 text-sm text-gray-500">
+          <p className="mt-3 text-gray-500">
             Datang langsung ke toko kami untuk konsultasi dan layanan
           </p>
         </div>
