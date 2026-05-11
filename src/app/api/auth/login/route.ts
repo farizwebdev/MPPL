@@ -5,9 +5,15 @@ export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    const adminUser = process.env.ADMIN_USERNAME || "admin";
-    const adminPass = process.env.ADMIN_PASSWORD || "admin123";
-    const secret = process.env.SESSION_SECRET || "default-secret";
+    const adminUser = process.env.ADMIN_USERNAME;
+    const adminPass = process.env.ADMIN_PASSWORD;
+
+    if (!adminUser || !adminPass) {
+      return NextResponse.json(
+        { error: "Konfigurasi server tidak lengkap" },
+        { status: 500 }
+      );
+    }
 
     if (username !== adminUser || password !== adminPass) {
       return NextResponse.json(
@@ -16,7 +22,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const sessionToken = `${Date.now()}-${Math.random().toString(36).slice(2)}-${secret}`;
+    const sessionToken = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
     const cookieStore = await cookies();
     cookieStore.set("session", sessionToken, {
