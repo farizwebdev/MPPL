@@ -3,25 +3,16 @@
 import { useEffect, useRef, useState } from "react";
 import { PinIcon, ClockIcon, PhoneIcon, LogoIcon } from "./Icons";
 
-function MapIllustration() {
+function MapEmbed() {
   return (
-    <svg viewBox="0 0 280 100" fill="none" className="h-full w-full" aria-hidden="true">
-      <rect width="280" height="100" rx="12" fill="url(#map-grad)" />
-      <path d="M0 30h280M0 60h280M0 85h280" stroke="white" strokeOpacity="0.15" strokeWidth="1" />
-      <path d="M70 0v100M140 0v100M210 0v100" stroke="white" strokeOpacity="0.1" strokeWidth="1" />
-      <circle cx="140" cy="45" r="7" fill="#2563EB" stroke="white" strokeWidth="2.5" />
-      <circle cx="140" cy="45" r="2.5" fill="white" />
-      <path d="M140 52l-1.5 4.5h3l-1.5-4.5z" fill="#2563EB" />
-      <rect x="60" y="68" width="20" height="12" rx="2" fill="white" fillOpacity="0.12" />
-      <rect x="195" y="20" width="18" height="10" rx="2" fill="white" fillOpacity="0.12" />
-      <rect x="205" y="72" width="24" height="14" rx="3" fill="white" fillOpacity="0.08" />
-      <defs>
-        <linearGradient id="map-grad" x1="0" y1="0" x2="280" y2="100">
-          <stop stopColor="#DBEAFE" />
-          <stop offset="1" stopColor="#BFDBFE" />
-        </linearGradient>
-      </defs>
-    </svg>
+    <iframe
+      src="https://www.google.com/maps?q=-7.7913343,110.3982787&output=embed"
+      className="h-full w-full"
+      allowFullScreen
+      loading="lazy"
+      referrerPolicy="no-referrer-when-downgrade"
+      title="Lokasi Radja Es Teller Sultan Jogja"
+    />
   );
 }
 
@@ -159,9 +150,9 @@ export default function Location() {
               }`}
             style={{ transitionDelay: "400ms" }}
           >
-            {/* Map illustration */}
-            <div className="overflow-hidden rounded-t-2xl">
-              <MapIllustration />
+            {/* Map embed */}
+            <div className="h-44 overflow-hidden rounded-t-2xl sm:h-48">
+              <MapEmbed />
             </div>
 
             {/* Brand + CTA */}
@@ -181,7 +172,9 @@ export default function Location() {
               </div>
 
               <a
-                href="#"
+                href="https://www.google.com/maps/place/Radja+Es+Teller+Sultan+Jogja/@-7.7913649,110.3983596,3a,75y,290.72h,92.87t/data=!3m7!1e1!3m5!1s6pynEPhK-ZHN8dbCWPbcdg!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-2.8700000000000045%26panoid%3D6pynEPhK-ZHN8dbCWPbcdg%26yaw%3D290.72!7i16384!8i8192!4m7!3m6!1s0x2e7a590040e19fed:0xc5f579b601c61418!8m2!3d-7.7913343!4d110.3982787!10e5!16s%2F%2Fg%2F11ldvmbrt5?entry=ttu"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-blue-600 px-4 py-2.5 text-sm font-medium text-blue-600 transition-all duration-300 hover:bg-blue-600 hover:text-white"
               >
                 <ExternalIcon />

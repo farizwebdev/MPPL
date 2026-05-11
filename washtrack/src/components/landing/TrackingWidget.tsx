@@ -55,9 +55,8 @@ export default function TrackingWidget() {
       <div className="relative mx-auto max-w-3xl px-4 sm:px-6">
         {/* Icon badge */}
         <div
-          className={`mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm transition-all duration-600 ${
-            visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
-          }`}
+          className={`mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 backdrop-blur-sm transition-all duration-600 ${visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+            }`}
         >
           <svg
             viewBox="0 0 24 24"
@@ -83,22 +82,20 @@ export default function TrackingWidget() {
 
         {/* Heading */}
         <h2
-          className={`mt-6 text-center text-3xl font-bold tracking-tight text-white transition-all duration-600 sm:text-4xl ${
-            visible
+          className={`mt-6 text-center text-3xl font-bold tracking-tight text-white transition-all duration-600 sm:text-4xl ${visible
               ? "translate-y-0 opacity-100"
               : "translate-y-6 opacity-0"
-          }`}
+            }`}
           style={{ transitionDelay: "100ms" }}
         >
           Lacak Cucian Anda Sekarang
         </h2>
 
         <p
-          className={`mt-3 text-center text-blue-200 transition-all duration-600 ${
-            visible
+          className={`mt-3 text-center text-blue-200 transition-all duration-600 ${visible
               ? "translate-y-0 opacity-100"
               : "translate-y-6 opacity-0"
-          }`}
+            }`}
           style={{ transitionDelay: "200ms" }}
         >
           Masukkan nomor resi untuk melihat status terbaru cucian Anda secara
@@ -108,11 +105,10 @@ export default function TrackingWidget() {
         {/* Form */}
         <form
           onSubmit={handleSubmit}
-          className={`mx-auto mt-8 flex max-w-xl flex-col gap-3 transition-all duration-600 sm:flex-row ${
-            visible
+          className={`mx-auto mt-8 flex max-w-xl flex-col gap-3 transition-all duration-600 sm:flex-row ${visible
               ? "translate-y-0 opacity-100"
               : "translate-y-6 opacity-0"
-          }`}
+            }`}
           style={{ transitionDelay: "300ms" }}
         >
           <div className="relative flex-1">
@@ -146,16 +142,15 @@ export default function TrackingWidget() {
 
         {/* Alternative link */}
         <p
-          className={`mt-4 text-center text-sm text-blue-300 transition-all duration-600 ${
-            visible
+          className={`mt-4 text-center text-sm text-blue-300 transition-all duration-600 ${visible
               ? "translate-y-0 opacity-100"
               : "translate-y-6 opacity-0"
-          }`}
+            }`}
           style={{ transitionDelay: "400ms" }}
         >
           Atau{" "}
           <a
-            href="/tracking"
+            href="#"
             className="font-medium text-white underline underline-offset-2 transition-all hover:no-underline"
           >
             cari berdasarkan nomor HP
@@ -164,11 +159,10 @@ export default function TrackingWidget() {
 
         {/* Social proof */}
         <div
-          className={`mt-8 flex items-center justify-center gap-2 text-sm text-blue-200 transition-all duration-600 ${
-            visible
+          className={`mt-8 flex items-center justify-center gap-2 text-sm text-blue-200 transition-all duration-600 ${visible
               ? "translate-y-0 opacity-100"
               : "translate-y-6 opacity-0"
-          }`}
+            }`}
           style={{ transitionDelay: "500ms" }}
         >
           <span className="flex -space-x-2">

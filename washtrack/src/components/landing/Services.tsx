@@ -58,25 +58,22 @@ function ServiceCard({
 
   return (
     <div
-      className={`group relative rounded-2xl border bg-white p-7 shadow-xs transition-all duration-500 ${
-        svc.featured
+      className={`group relative rounded-2xl border bg-white p-7 shadow-xs transition-all duration-500 ${svc.featured
           ? "border-blue-200 shadow-sm hover:shadow-md"
           : "border-gray-100 hover:border-gray-200 hover:shadow-sm"
-      } ${
-        visible
+        } ${visible
           ? "translate-y-0 opacity-100"
           : "translate-y-8 opacity-0"
-      }`}
+        }`}
       style={{ transitionDelay: `${index * 120}ms` }}
     >
       {/* Tag badge */}
       {svc.tag && (
         <span
-          className={`absolute top-4 right-4 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide ${
-            svc.featured
+          className={`absolute top-4 right-4 rounded-full px-3 py-1 text-[11px] font-semibold tracking-wide ${svc.featured
               ? "bg-blue-600 text-white"
               : "bg-blue-50 text-blue-600"
-          }`}
+            }`}
         >
           {svc.tag}
         </span>
@@ -84,11 +81,10 @@ function ServiceCard({
 
       {/* Icon */}
       <div
-        className={`flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 ${
-          svc.featured
+        className={`flex h-12 w-12 items-center justify-center rounded-xl transition-all duration-300 ${svc.featured
             ? "bg-blue-600 text-white group-hover:bg-blue-700"
             : "bg-blue-50 text-blue-600 group-hover:bg-blue-600 group-hover:text-white"
-        }`}
+          }`}
       >
         <Icon className="h-5 w-5" />
       </div>
@@ -120,12 +116,11 @@ function ServiceCard({
 
       {/* CTA */}
       <a
-        href="/tracking"
-        className={`mt-5 flex w-full items-center justify-center rounded-xl py-2.5 text-sm font-medium transition-all ${
-          svc.featured
+        href="#"
+        className={`mt-5 flex w-full items-center justify-center rounded-xl py-2.5 text-sm font-medium transition-all ${svc.featured
             ? "bg-blue-600 text-white shadow-sm hover:bg-blue-700"
             : "border border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white"
-        }`}
+          }`}
       >
         Pilih Layanan
       </a>
