@@ -29,6 +29,7 @@ export default function TrackingWidget() {
           className="mx-auto mt-8 flex max-w-xl flex-col gap-3 sm:flex-row"
         >
           <input
+            suppressHydrationWarning
             type="text"
             value={resi}
             onChange={(e) => setResi(e.target.value)}
@@ -36,6 +37,7 @@ export default function TrackingWidget() {
             className="flex-1 rounded-xl border-0 px-5 py-3.5 text-sm text-gray-900 shadow-sm outline-none ring-1 ring-white/20 focus:ring-2 focus:ring-white"
           />
           <button
+            suppressHydrationWarning
             type="submit"
             className="rounded-xl bg-white px-8 py-3.5 text-sm font-medium text-blue-600 shadow-sm transition-all hover:bg-blue-50"
           >
