@@ -37,7 +37,16 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
+    <>
+      {/* Backdrop overlay for mobile menu */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/10 backdrop-blur-sm md:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         hidden ? "-translate-y-full" : "translate-y-0"
       } ${
@@ -133,5 +142,6 @@ export default function Navbar() {
         </div>
       )}
     </header>
+    </>
   );
 }
