@@ -127,7 +127,7 @@ export default function Hero() {
             >
               <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-200/60 bg-blue-50/80 px-4 py-1.5 text-xs font-medium tracking-wide text-blue-700">
                 <LogoIcon className="h-3.5 w-3.5" />
-                Laundry On Express
+                Laundry Termurah Di Sorowajan
               </span>
             </div>
 
