@@ -116,7 +116,7 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <div className="relative mt-14 grid gap-6 sm:grid-cols-3">
+        <div className="relative mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, i) => (
             <StepCard
               key={step.number}

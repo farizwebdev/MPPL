@@ -106,6 +106,7 @@ export default function WhyChooseUs() {
 
   return (
     <section
+      id="keunggulan"
       ref={sectionRef}
       className="relative overflow-hidden bg-white py-16 sm:py-24"
     >

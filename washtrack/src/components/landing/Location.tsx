@@ -121,6 +121,7 @@ export default function Location() {
 
   return (
     <section
+      id="lokasi"
       ref={sectionRef}
       className="relative overflow-hidden bg-white py-12 sm:py-20"
     >

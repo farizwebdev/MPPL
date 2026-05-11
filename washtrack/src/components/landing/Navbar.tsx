@@ -5,8 +5,11 @@ import { useState, useEffect, useRef } from "react";
 import { LogoIcon } from "./Icons";
 
 const navLinks = [
+  { href: "#how-it-works", label: "Cara Kerja" },
   { href: "#services", label: "Harga" },
-  { href: "/tracking", label: "Lacak" },
+  { href: "#keunggulan", label: "Keunggulan" },
+  { href: "#testimoni", label: "Testimoni" },
+  { href: "#lokasi", label: "Kunjungi" },
 ];
 
 export default function Navbar() {
@@ -43,18 +46,17 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5"
-        >
+      <div className="mx-auto grid max-w-6xl grid-cols-[auto_1fr_auto] items-center px-4 py-4 sm:px-6">
+        {/* Left — logo */}
+        <Link href="/" className="flex items-center gap-2.5">
           <LogoIcon className="h-7 w-7 text-blue-600" />
           <span className="text-lg font-bold tracking-tight text-gray-900">
             WashTrack
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
+        {/* Center — nav links */}
+        <nav className="hidden items-center justify-center gap-5 md:flex xl:gap-6">
           {navLinks.map((link) => (
             <Link
               key={link.href}
@@ -65,44 +67,48 @@ export default function Navbar() {
               <span className="absolute -bottom-0.5 left-1/2 h-px w-0 bg-blue-600 transition-all duration-300 group-hover:w-full group-hover:left-0" />
             </Link>
           ))}
-          <Link
-            href="/dashboard"
-            className="rounded-xl border border-gray-300 px-5 py-2 text-sm font-medium text-gray-700 transition-all hover:border-blue-600 hover:text-blue-600"
-          >
-            Login Admin
-          </Link>
         </nav>
 
-        <button
-          className="md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle menu"
-        >
-          <svg
-            className="h-5 w-5 text-gray-600"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        {/* Right — CTA (desktop) + hamburger (mobile) */}
+        <div className="flex items-center justify-end gap-3">
+          <Link
+            href="#lokasi"
+            className="hidden rounded-xl bg-blue-600 px-5 py-2 text-sm font-medium text-white shadow-sm transition-all hover:bg-blue-700 md:inline-flex"
           >
-            {mobileOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.8}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.8}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
-        </button>
+            Hubungi Kami
+          </Link>
+          <button
+            className="md:hidden"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
+          >
+            <svg
+              className="h-5 w-5 text-gray-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {mobileOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+        </div>
       </div>
 
+      {/* Mobile menu */}
       {mobileOpen && (
         <div className="border-t border-gray-100 bg-white/95 backdrop-blur-xl md:hidden">
           <nav className="flex flex-col gap-1 px-4 pb-5 pt-3">
@@ -117,11 +123,11 @@ export default function Navbar() {
               </Link>
             ))}
             <Link
-              href="/dashboard"
+              href="#lokasi"
               onClick={() => setMobileOpen(false)}
-              className="mt-2 rounded-xl border border-gray-300 px-5 py-2.5 text-center text-sm font-medium text-gray-700 transition-colors hover:border-blue-600 hover:text-blue-600"
+              className="mt-2 rounded-xl bg-blue-600 px-5 py-2.5 text-center text-sm font-medium text-white transition-colors hover:bg-blue-700"
             >
-              Login Admin
+              Hubungi Kami
             </Link>
           </nav>
         </div>

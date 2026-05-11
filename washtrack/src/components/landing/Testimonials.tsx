@@ -139,6 +139,7 @@ export default function Testimonials() {
 
   return (
     <section
+      id="testimoni"
       ref={sectionRef}
       className="relative overflow-hidden bg-gray-50 py-16 sm:py-24"
     >
@@ -158,7 +159,7 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
             <TestimonialCard
               key={t.name}
