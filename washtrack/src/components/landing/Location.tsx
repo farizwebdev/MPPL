@@ -38,22 +38,22 @@ const infoItems = [
     icon: PinIcon,
     title: "Alamat",
     lines: [
-      "Jl. Laundry On Express No. 123",
-      "Kelurahan Sukamaju, Kecamatan Cimahi",
-      "Bandung, Jawa Barat 40512",
+      "Jl. Sorowajan Baru",
+      "Kecamatan Banguntapan, Kabupaten Bantul",
+      "Daerah Istimewa Yogyakarta",
     ],
   },
   {
     icon: ClockIcon,
     title: "Jam Operasional",
-    lines: ["Senin - Minggu: 08.00 - 21.00"],
+    lines: ["Senin - Minggu: 07.00 - 21.00"],
     sub: "Buka setiap hari, termasuk hari libur nasional",
   },
   {
     icon: PhoneIcon,
     title: "Kontak",
-    lines: ["Telepon/WhatsApp: 0812-3456-7890"],
-    sub: "Email: hello@laundryonexpress.com",
+    lines: ["Telepon/WhatsApp: 0821-3634-7300"],
+    sub: "Email: aselaundry@gmail.com",
   },
 ];
 
@@ -70,9 +70,8 @@ function InfoCard({
 
   return (
     <div
-      className={`group rounded-2xl border border-gray-100 bg-white p-4 shadow-xs transition-all duration-500 hover:-translate-y-0.5 hover:border-blue-100 hover:shadow-sm ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-      }`}
+      className={`group rounded-2xl border border-gray-100 bg-white p-4 shadow-xs transition-all duration-500 hover:-translate-y-0.5 hover:border-blue-100 hover:shadow-sm ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        }`}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       <div className="flex items-start gap-3.5">
@@ -156,9 +155,8 @@ export default function Location() {
 
           {/* Right — map + CTA */}
           <div
-            className={`flex flex-col rounded-2xl border border-gray-100 bg-white shadow-xs transition-all duration-700 ${
-              visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
-            }`}
+            className={`flex flex-col rounded-2xl border border-gray-100 bg-white shadow-xs transition-all duration-700 ${visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+              }`}
             style={{ transitionDelay: "400ms" }}
           >
             {/* Map illustration */}
@@ -174,7 +172,7 @@ export default function Location() {
                 </div>
                 <div>
                   <p className="text-sm font-bold text-gray-900">
-                    Laundry On Express
+                    Ase Laundry
                   </p>
                   <p className="text-xs text-gray-400">
                     Datang, serahkan, kami urus sisanya.

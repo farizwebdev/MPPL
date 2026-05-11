@@ -9,7 +9,7 @@ export default function Footer() {
           <div>
             <Link href="/" className="flex items-center gap-2.5 text-lg font-bold text-white">
               <LogoIcon className="h-6 w-6" />
-              WashTrack
+              Ase Laundry
             </Link>
             <p className="mt-3 text-sm leading-relaxed text-gray-500">
               Sistem Informasi Manajemen &amp; Pelacakan Laundry. Solusi digital
@@ -50,15 +50,15 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold text-white">Kontak</h4>
             <ul className="mt-4 space-y-2 text-sm text-gray-500">
-              <li>0812-3456-7890</li>
-              <li>hello@laundryonexpress.com</li>
-              <li>Jl. Laundry On Express No. 123, Bandung</li>
+              <li>0821-3634-7300</li>
+              <li>aselaundry@gmail.com</li>
+              <li>Jl. Sorowajan Baru Banguntapan Bantul, Daerah Istimewa Yogyakarta</li>
             </ul>
           </div>
         </div>
 
         <div className="mt-10 border-t border-gray-800 pt-6 text-center text-sm text-gray-600">
-          &copy; 2026 WashTrack &mdash; Laundry On Express. All rights reserved.
+          &copy; 2026 Ase Laundry. All rights reserved.
         </div>
       </div>
     </footer>

@@ -51,7 +51,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2.5">
           <LogoIcon className="h-7 w-7 text-blue-600" />
           <span className="text-lg font-bold tracking-tight text-gray-900">
-            WashTrack
+            Ase Laundry
           </span>
         </Link>
 

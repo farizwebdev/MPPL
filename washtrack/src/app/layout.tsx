@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WashTrack — Laundry Premium, Anti Ribet | Laundry On Express",
+  title: "Ase Laundry — Laundry Premium, Anti Ribet | Laundry On Express",
   description:
     "Pantau status cucian real-time tanpa perlu datang atau chat. Laundry On Express — solusi laundry digital pertama di Bandung.",
 };
