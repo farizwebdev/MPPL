@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Customer {
+  id        String        @id @default(uuid())
+  name      String
+  noWa      String        @map("no_wa")
+  createdAt DateTime      @default(now()) @map("created_at")
+  updatedAt DateTime      @updatedAt @map("updated_at")
+  orders    Transaction[]
+
+  @@index([noWa])
+  @@map("customers")
+}
+
+model Service {
+  id            String        @id
+  name          String
+  pricePerKg    Int           @map("price_per_kg")
+  estimatedTime String        @map("estimated_time")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  orders        Transaction[]
+
+  @@map("services")
+}
+
+enum PaymentStatus {
+  LUNAS
+  BELUM_LUNAS
+}
+
+enum LaundryStatus {
+  ANTREAN
+  DICUCI
+  DISETRIKA
+  SIAP_DIAMBIL
+  SELESAI
+  DISUMBANGKAN
+}
+
+model Transaction {
+  id             String         @id @default(uuid())
+  receiptCode    String         @unique @map("receipt_code")
+  customerId     String         @map("customer_id")
+  serviceId      String         @map("service_id")
+  totalWeight    Float          @map("total_berat")
+  totalCost      Int            @map("total_biaya")
+  paymentStatus  PaymentStatus  @default(BELUM_LUNAS) @map("status_pembayaran")
+  laundryStatus  LaundryStatus  @default(ANTREAN) @map("status_cucian")
+  specialNotes   String?        @map("catatan_khusus")
+  pickupDate     DateTime?      @map("tanggal_pengambilan")
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+  customer       Customer       @relation(fields: [customerId], references: [id])
+  service        Service        @relation(fields: [serviceId], references: [id])
+
+  @@index([customerId])
+  @@index([createdAt])
+  @@index([laundryStatus])
+  @@map("transactions")
+}
