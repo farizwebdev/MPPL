@@ -13,8 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "WashTrack - Laundry Management",
-  description: "Sistem Informasi Manajemen & Pelacakan Laundry",
+  title: "WashTrack — Laundry Premium, Anti Ribet | Laundry On Express",
+  description:
+    "Pantau status cucian real-time tanpa perlu datang atau chat. Laundry On Express — solusi laundry digital pertama di Bandung.",
 };
 
 export default function RootLayout({
@@ -25,9 +26,9 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}
     >
-      <body className="min-h-full bg-gray-50 text-gray-900">
+      <body className="min-h-screen bg-white text-gray-900 antialiased">
         {children}
       </body>
     </html>
