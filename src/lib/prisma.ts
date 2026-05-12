@@ -6,10 +6,10 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 function createPrismaClient() {
-  const adapter = new PrismaPg({
-    connectionString: process.env.DIRECT_URL!,
-    ssl: true,
-  });
+  const url = process.env.DATABASE_URL || process.env.DIRECT_URL;
+  if (!url) throw new Error("DATABASE_URL or DIRECT_URL env var is required");
+
+  const adapter = new PrismaPg({ connectionString: url, ssl: true });
   return new PrismaClient({ adapter });
 }
 

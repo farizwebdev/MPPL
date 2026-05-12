@@ -7,9 +7,10 @@ export async function GET() {
       orderBy: { pricePerKg: "asc" },
     });
     return NextResponse.json(services);
-  } catch {
+  } catch (e) {
+    console.error("Error fetching services:", e);
     return NextResponse.json(
-      { error: "Gagal memuat layanan" },
+      { error: e instanceof Error ? e.message : "Gagal memuat layanan" },
       { status: 500 }
     );
   }
