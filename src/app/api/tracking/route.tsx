@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
       });
 
       transactions = await prisma.transaction.findMany({
-        where: { customerId: { in: customers.map((c) => c.id) } },
+        where: { customerId: { in: customers.map((c: any) => c.id) } },
         include: { customer: true, service: true },
         orderBy: { createdAt: "desc" },
       });

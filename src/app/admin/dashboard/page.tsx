@@ -20,11 +20,11 @@ async function getStats() {
     ]);
 
     const todayRevenue = todayTransactions.reduce(
-      (sum, t) => sum + t.totalCost,
+      (sum: number, t: any) => sum + t.totalCost,
       0
     );
     const todayWeight = todayTransactions.reduce(
-      (sum, t) => sum + t.totalWeight,
+      (sum: number, t: any) => sum + t.totalWeight,
       0
     );
 

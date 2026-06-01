@@ -26,16 +26,16 @@ export async function GET(request: NextRequest) {
     });
 
     const totalRevenue = transactions.reduce(
-      (sum, t) => sum + t.totalCost,
+      (sum: number, t: any) => sum + t.totalCost,
       0
     );
     const totalWeight = transactions.reduce(
-      (sum, t) => sum + t.totalWeight,
+      (sum: number, t: any) => sum + t.totalWeight,
       0
     );
     const totalTransactions = transactions.length;
     const paidCount = transactions.filter(
-      (t) => t.paymentStatus === "LUNAS"
+      (t: any) => t.paymentStatus === "LUNAS"
     ).length;
 
     return NextResponse.json({
