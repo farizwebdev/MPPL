@@ -1,5 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import DashboardStats from "@/components/admin/DashboardStats";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
@@ -38,6 +40,13 @@ async function getStats() {
 }
 
 export default async function DashboardPage() {
+  const cookieStore = await cookies();
+  const role = cookieStore.get("role")?.value;
+
+  if (role !== "owner") {
+    redirect("/admin/transaksi");
+  }
+
   const stats = await getStats();
 
   return (

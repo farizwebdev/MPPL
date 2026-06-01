@@ -5,24 +5,19 @@ export async function POST(request: Request) {
   try {
     const { username, password } = await request.json();
 
-    const adminUser = process.env.ADMIN_USERNAME;
-    const adminPass = process.env.ADMIN_PASSWORD;
-
-    if (!adminUser || !adminPass) {
-      return NextResponse.json(
-        { error: "Konfigurasi server tidak lengkap" },
-        { status: 500 }
-      );
-    }
-
-    if (username !== adminUser || password !== adminPass) {
+    let role = "";
+    if (username === "owner" && password === "owner123") {
+      role = "owner";
+    } else if (username === "karyawan" && password === "karyawan123") {
+      role = "karyawan";
+    } else {
       return NextResponse.json(
         { error: "Username atau password salah" },
         { status: 401 }
       );
     }
 
-    const sessionToken = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const sessionToken = `${role}-${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
     const cookieStore = await cookies();
     cookieStore.set("session", sessionToken, {
@@ -32,8 +27,17 @@ export async function POST(request: Request) {
       path: "/",
       maxAge: 60 * 60 * 8,
     });
+    
+    // Simpan role di cookie non-httpOnly agar bisa dibaca di client (untuk UI logic prototipe)
+    cookieStore.set("role", role, {
+      httpOnly: false,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      path: "/",
+      maxAge: 60 * 60 * 8,
+    });
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true, role });
   } catch {
     return NextResponse.json(
       { error: "Terjadi kesalahan" },

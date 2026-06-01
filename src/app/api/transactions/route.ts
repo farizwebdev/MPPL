@@ -36,18 +36,23 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { customerName, noWa, serviceId, totalWeight, specialNotes } = body;
+    const {
+      customerName,
+      noWa,
+      alamat,
+      serviceId,
+      totalWeight,
+      totalPieces,
+      tallyDetails,
+      paymentStatus,
+      specialNotes,
+      createdBy,
+      createdRole
+    } = body;
 
-    if (!customerName || !noWa || !serviceId || !totalWeight) {
+    if (!customerName || !noWa || !serviceId || !totalWeight || !totalPieces) {
       return NextResponse.json(
-        { error: "Semua field wajib diisi" },
-        { status: 400 }
-      );
-    }
-
-    if (totalWeight < 2) {
-      return NextResponse.json(
-        { error: "Berat minimal 2 kg" },
+        { error: "Data wajib tidak lengkap" },
         { status: 400 }
       );
     }
@@ -63,17 +68,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const totalCost = Math.round(totalWeight * service.pricePerKg);
-    const rawCode = generateReceiptCode();
-    const receiptCode = sanitizeReceiptCode(rawCode);
+    const totalCost = service.pricePerKg * parseFloat(totalWeight);
+    const dateStr = new Date().toISOString().split("T")[0].replace(/-/g, "");
+    const randomCode = Math.floor(1000 + Math.random() * 9000);
+    const receiptCode = `TRX-${dateStr}-${randomCode}`;
 
     let customer = await prisma.customer.findFirst({
-      where: { noWa: noWa },
+      where: { noWa },
     });
 
     if (!customer) {
       customer = await prisma.customer.create({
-        data: { name: customerName, noWa },
+        data: { name: customerName, noWa, alamat: alamat || "" },
       });
     }
 
@@ -81,14 +87,16 @@ export async function POST(request: NextRequest) {
       data: {
         receiptCode,
         customerId: customer.id,
-        serviceId: service.id,
-        totalWeight,
+        serviceId,
+        totalWeight: parseFloat(totalWeight),
+        totalPieces: parseInt(totalPieces),
+        tallyDetails: tallyDetails || {},
         totalCost,
-        specialNotes: specialNotes || null,
-      },
-      include: {
-        customer: true,
-        service: true,
+        paymentStatus: paymentStatus || "BELUM_LUNAS",
+        laundryStatus: "ANTREAN",
+        specialNotes,
+        createdBy: createdBy || "Karyawan",
+        createdRole: createdRole || "karyawan",
       },
     });
 

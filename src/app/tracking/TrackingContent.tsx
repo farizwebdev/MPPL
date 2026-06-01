@@ -11,6 +11,7 @@ interface Transaction {
   id: string;
   receiptCode: string;
   totalWeight: number;
+  totalPieces?: number;
   totalCost: number;
   paymentStatus: string;
   laundryStatus: string;
@@ -78,8 +79,13 @@ export default function TrackingContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="mx-auto max-w-2xl">
-        <div className="pt-8 text-center">
-          <span className="text-5xl">🧺</span>
+        <div className="pt-8 text-center flex flex-col items-center">
+          <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-600 text-white shadow-lg mb-2">
+            <svg viewBox="0 0 24 24" fill="none" className="h-8 w-8" aria-hidden="true">
+              <path d="M12 4v16m8-8H4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" />
+            </svg>
+          </div>
           <h1 className="mt-2 text-3xl font-bold text-blue-600">WashTrack</h1>
           <p className="text-gray-500">Lacak status cucian Anda secara real-time</p>
         </div>
@@ -183,6 +189,12 @@ export default function TrackingContent() {
                       <p className="text-gray-400">Berat</p>
                       <p className="font-medium text-gray-800">{t.totalWeight} kg</p>
                     </div>
+                    {t.totalPieces && (
+                      <div>
+                        <p className="text-gray-400">Total Potong</p>
+                        <p className="font-medium text-gray-800">{t.totalPieces} pcs</p>
+                      </div>
+                    )}
                     <div>
                       <p className="text-gray-400">Biaya</p>
                       <p className="font-medium text-gray-800">
@@ -216,7 +228,10 @@ export default function TrackingContent() {
                     rel="noopener noreferrer"
                     className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-green-500 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-green-600"
                   >
-                    <span>📱</span>
+                    <svg viewBox="0 0 24 24" fill="none" className="h-4 w-4" aria-hidden="true">
+                      <path d="M12 21a9 9 0 006.5-15.5 9 9 0 00-13 0A8.96 8.96 0 004.14 11.6L3 19l7.35-1.15A9 9 0 0012 21z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <path d="M9 10a1 1 0 00-1 1v1a3 3 0 003 3h1a1 1 0 001-1v-1a1 1 0 00-1-1h-1a1 1 0 01-1-1v-1a1 1 0 00-1-1H9z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                     Bagikan via WhatsApp
                   </a>
                 </div>

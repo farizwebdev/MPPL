@@ -10,8 +10,8 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit(e?: React.FormEvent) {
+    if (e) e.preventDefault();
     setError("");
     setLoading(true);
 
@@ -70,41 +70,45 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Login Form */}
+        {/* Login Form Prototype */}
         <div className="rounded-2xl border border-gray-100 bg-white p-7 shadow-xs">
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-                Username
-              </label>
-              <input
-                id="username"
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                placeholder="Masukkan username"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-xs transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-50 focus:outline-none"
-                autoComplete="username"
-              />
-            </div>
+          <div className="space-y-4">
+            <p className="text-center text-sm text-gray-500 mb-6">Pilih akses prototipe:</p>
+            
+            <button
+              onClick={() => { setUsername("karyawan"); setPassword("karyawan123"); setTimeout(handleSubmit, 100); }}
+              disabled={loading}
+              className="flex w-full items-center justify-between rounded-xl border-2 border-blue-100 bg-blue-50/50 p-4 transition-all hover:border-blue-500 hover:bg-blue-50"
+            >
+              <div className="text-left">
+                <p className="font-semibold text-blue-900">Masuk sebagai Karyawan</p>
+                <p className="text-xs text-blue-600/70">Akses operasional kasir & status</p>
+              </div>
+              <div className="rounded-full bg-blue-100 p-2 text-blue-600">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </button>
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Masukkan password"
-                className="mt-1.5 w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 shadow-xs transition-all duration-200 placeholder:text-gray-400 hover:border-gray-300 focus:border-blue-300 focus:ring-4 focus:ring-blue-50 focus:outline-none"
-                autoComplete="current-password"
-              />
-            </div>
+            <button
+              onClick={() => { setUsername("owner"); setPassword("owner123"); setTimeout(handleSubmit, 100); }}
+              disabled={loading}
+              className="flex w-full items-center justify-between rounded-xl border-2 border-purple-100 bg-purple-50/50 p-4 transition-all hover:border-purple-500 hover:bg-purple-50"
+            >
+              <div className="text-left">
+                <p className="font-semibold text-purple-900">Masuk sebagai Owner</p>
+                <p className="text-xs text-purple-600/70">Akses penuh & laporan keuangan</p>
+              </div>
+              <div className="rounded-full bg-purple-100 p-2 text-purple-600">
+                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
+                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            </button>
 
             {error && (
-              <div className="rounded-xl border border-red-100 bg-red-50 px-4 py-3">
+              <div className="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3">
                 <div className="flex items-center gap-2">
                   <svg viewBox="0 0 16 16" fill="none" className="h-4 w-4 flex-shrink-0 text-red-500" aria-hidden="true">
                     <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="1.2" />
@@ -114,25 +118,11 @@ export default function LoginPage() {
                 </div>
               </div>
             )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-3 text-sm font-medium text-white shadow-xs transition-all hover:bg-blue-700 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? (
-                <>
-                  <svg className="h-4 w-4 animate-spin" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" opacity="0.25" />
-                    <path d="M12 2a10 10 0 019.95 9" stroke="currentColor" strokeWidth="3" strokeLinecap="round" />
-                  </svg>
-                  Memproses...
-                </>
-              ) : (
-                "Masuk"
-              )}
-            </button>
-          </form>
+            
+            <form onSubmit={handleSubmit} className="hidden">
+               {/* Hidden form to maintain original handleSubmit logic */}
+            </form>
+          </div>
         </div>
 
         <p className="mt-6 text-center text-xs text-gray-400">

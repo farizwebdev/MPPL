@@ -2,27 +2,50 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DashboardIcon,
   TransactionIcon,
   PlusIcon,
   ReportIcon,
+  CustomerIcon,
+  SettingsIcon,
   LogoutIcon,
 } from "./AdminIcons";
-
-const navItems = [
-  { href: "/admin/dashboard", label: "Dashboard", icon: DashboardIcon },
-  { href: "/admin/transaksi", label: "Transaksi", icon: TransactionIcon },
-  { href: "/admin/transaksi/baru", label: "Transaksi Baru", icon: PlusIcon },
-  { href: "/admin/laporan", label: "Laporan", icon: ReportIcon },
-];
 
 export default function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+
+  const navItems = [
+    { href: "/admin/transaksi", label: "Transaksi", icon: TransactionIcon, role: "all" },
+    { href: "/admin/pelanggan", label: "Pelanggan", icon: CustomerIcon, role: "all" },
+    { href: "/admin/shift", label: "Tutup Kasir", icon: ReportIcon, role: "karyawan" },
+  ];
+  
+  // Extra nav items for Owner
+  const ownerNavItems = [
+    { href: "/admin/dashboard", label: "Dashboard", icon: DashboardIcon },
+    { href: "/admin/transaksi", label: "Transaksi", icon: TransactionIcon },
+    { href: "/admin/pelanggan", label: "Pelanggan", icon: CustomerIcon },
+    { href: "/admin/laporan", label: "Laporan", icon: ReportIcon },
+    { href: "/admin/pengaturan", label: "Pengaturan", icon: SettingsIcon },
+  ];
+
+  useEffect(() => {
+    // We read from document.cookie "role" set by our mock API
+    const match = document.cookie.match(new RegExp('(^| )role=([^;]+)'));
+    if (match) {
+      setUserRole(match[2]);
+    } else {
+      setUserRole("karyawan"); // fallback
+    }
+  }, []);
+  
+  const activeNavItems = userRole === "owner" ? ownerNavItems : navItems;
 
   async function handleLogout() {
     setLoggingOut(true);
@@ -37,7 +60,7 @@ export default function Sidebar() {
   return (
     <>
       <button
-        className="fixed top-4 right-4 z-50 rounded-xl bg-blue-600 p-2.5 text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md md:hidden"
+        className="fixed top-4 right-4 z-50 rounded-xl bg-blue-600 p-2.5 text-white shadow-sm transition-all hover:bg-blue-700 hover:shadow-md md:hidden print:hidden"
         onClick={() => setOpen(!open)}
         aria-label="Toggle sidebar"
       >
@@ -51,7 +74,7 @@ export default function Sidebar() {
       </button>
 
       <aside
-        className={`fixed inset-y-0 left-0 z-40 w-64 transform bg-white shadow-sm transition-transform duration-300 md:relative md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"
+        className={`fixed inset-y-0 left-0 z-40 w-64 shrink-0 transform bg-white shadow-sm transition-transform duration-300 md:relative md:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"
           }`}
       >
         <div className="relative flex h-full flex-col">
@@ -81,7 +104,7 @@ export default function Sidebar() {
 
           {/* Navigation */}
           <nav className="relative flex-1 space-y-1 px-3 py-5">
-            {navItems.map((item) => {
+            {activeNavItems.map((item) => {
               const active = pathname.startsWith(item.href);
               const Icon = item.icon;
               return (

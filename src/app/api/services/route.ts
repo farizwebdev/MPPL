@@ -15,3 +15,24 @@ export async function GET() {
     );
   }
 }
+
+export async function POST(request: Request) {
+  try {
+    // Basic auth check
+    const cookie = request.headers.get("cookie") || "";
+    const isOwner = cookie.includes("role=owner");
+    if (!isOwner) {
+      return NextResponse.json({ error: "Akses Ditolak" }, { status: 403 });
+    }
+
+    const body = await request.json();
+    if (!body.name || !body.pricePerKg) {
+      return NextResponse.json({ error: "Data tidak lengkap" }, { status: 400 });
+    }
+
+    const service = await prisma.service.create({ data: body });
+    return NextResponse.json(service, { status: 201 });
+  } catch (e) {
+    return NextResponse.json({ error: "Gagal membuat layanan" }, { status: 500 });
+  }
+}

@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState, useMemo } from "react";
 import Link from "next/link";
 import { formatRupiah } from "@/lib/utils";
-import { SearchIcon, FilterIcon, PlusIcon } from "./AdminIcons";
+import { SearchIcon, FilterIcon, PlusIcon, ReceiptIcon } from "./AdminIcons";
+import TransactionBoard from "./TransactionBoard";
 
 interface Customer {
   name: string;
@@ -97,9 +98,15 @@ export default function TransactionList({
   transactions: Transaction[];
 }) {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const [data, setData] = useState(initialData);
   const [visible, setVisible] = useState(false);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
+  const [viewMode, setViewMode] = useState<"list" | "board">("list");
+
+  useEffect(() => {
+    setData(initialData);
+  }, [initialData]);
 
   useEffect(() => {
     const el = sectionRef.current;
@@ -120,7 +127,7 @@ export default function TransactionList({
   }, []);
 
   const filtered = useMemo(() => {
-    return initialData.filter((t) => {
+    return data.filter((t) => {
       const matchSearch =
         !search ||
         t.receiptCode.toLowerCase().includes(search.toLowerCase()) ||
@@ -131,7 +138,30 @@ export default function TransactionList({
 
       return matchSearch && matchStatus;
     });
-  }, [initialData, search, statusFilter]);
+  }, [data, search, statusFilter]);
+
+  async function handleUpdate(id: string, updates: any) {
+    // Optimistic UI update
+    setData((prev) => prev.map((t) => (t.id === id ? { ...t, ...updates } : t)));
+    
+    // Read role
+    let role = "karyawan";
+    if (typeof document !== "undefined") {
+      const match = document.cookie.match(new RegExp('(^| )role=([^;]+)'));
+      if (match) role = match[2];
+    }
+    
+    try {
+      await fetch(`/api/transactions/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...updates, updatedBy: role === "owner" ? "Owner" : "Karyawan", updatedRole: role }),
+      });
+    } catch {
+      // Revert if error
+      setData(initialData);
+    }
+  }
 
   return (
     <div ref={sectionRef}>
@@ -149,13 +179,37 @@ export default function TransactionList({
             Kelola semua transaksi laundry
           </p>
         </div>
-        <Link
-          href="/admin/transaksi/baru"
-          className="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-xs transition-all hover:bg-blue-700 hover:shadow-md"
-        >
-          <PlusIcon className="h-4 w-4" />
-          <span>Transaksi Baru</span>
-        </Link>
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <div className="inline-flex rounded-xl bg-gray-100 p-1">
+            <button
+              onClick={() => setViewMode("list")}
+              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
+                viewMode === "list"
+                  ? "bg-white text-gray-900 shadow-xs"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              List
+            </button>
+            <button
+              onClick={() => setViewMode("board")}
+              className={`flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-all ${
+                viewMode === "board"
+                  ? "bg-white text-gray-900 shadow-xs"
+                  : "text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              Papan
+            </button>
+          </div>
+          <Link
+            href="/admin/transaksi/baru"
+            className="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-xs transition-all hover:bg-blue-700 hover:shadow-md"
+          >
+            <PlusIcon className="h-4 w-4" />
+            <span>Transaksi Baru</span>
+          </Link>
+        </div>
       </div>
 
       {/* Search & Filter */}
@@ -200,8 +254,9 @@ export default function TransactionList({
       </div>
 
       {/* Mobile Card View (hidden on md+) */}
-      <div
-        className={`space-y-3 md:hidden transition-all duration-500 delay-100 ${
+      {viewMode === "list" && (
+        <div
+          className={`space-y-3 md:hidden transition-all duration-500 delay-100 ${
           visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
         style={{ transitionDelay: "250ms" }}
@@ -232,14 +287,16 @@ export default function TransactionList({
         )}
         {filtered.length > 0 && (
           <p className="text-center text-xs text-gray-400 pt-2">
-            Menampilkan {filtered.length} dari {initialData.length} transaksi
+            Menampilkan {filtered.length} dari {data.length} transaksi
           </p>
         )}
       </div>
+      )}
 
       {/* Desktop Table (hidden on mobile) */}
-      <div
-        className={`hidden md:block overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs transition-all duration-500 delay-100 ${
+      {viewMode === "list" && (
+        <div
+          className={`hidden md:block overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xs transition-all duration-500 delay-100 ${
           visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
         }`}
         style={{ transitionDelay: "250ms" }}
@@ -350,11 +407,33 @@ export default function TransactionList({
         {filtered.length > 0 && (
           <div className="border-t border-gray-100 px-5 py-3">
             <p className="text-xs text-gray-400">
-              Menampilkan {filtered.length} dari {initialData.length} transaksi
+              Menampilkan {filtered.length} dari {data.length} transaksi
             </p>
           </div>
         )}
       </div>
+      )}
+
+      {/* Kanban Board View */}
+      {viewMode === "board" && (
+        <div
+          className={`transition-all duration-500 delay-100 ${
+            visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+          style={{ transitionDelay: "250ms" }}
+        >
+          {filtered.length === 0 ? (
+            <div className="flex flex-col items-center gap-2 rounded-xl border border-gray-100 bg-white py-16 text-center mt-4">
+              <SearchIcon className="h-8 w-8 text-gray-300" />
+              <p className="text-sm text-gray-400">
+                Tidak ada transaksi
+              </p>
+            </div>
+          ) : (
+            <TransactionBoard transactions={filtered} onUpdate={handleUpdate} />
+          )}
+        </div>
+      )}
     </div>
   );
 }

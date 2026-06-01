@@ -48,6 +48,8 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
       data.pickupDate = body.pickupDate ? new Date(body.pickupDate) : null;
     }
     if (body.specialNotes !== undefined) data.specialNotes = body.specialNotes;
+    if (body.updatedBy) data.updatedBy = body.updatedBy;
+    if (body.updatedRole) data.updatedRole = body.updatedRole;
 
     const transaction = await prisma.transaction.update({
       where: { id },
@@ -60,6 +62,27 @@ export async function PATCH(request: NextRequest, { params }: RouteContext) {
     console.error("Error updating transaction:", error);
     return NextResponse.json(
       { error: "Gagal memperbarui transaksi" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request: NextRequest, { params }: RouteContext) {
+  try {
+    const roleCookie = request.cookies.get("role");
+    if (!roleCookie || roleCookie.value !== "owner") {
+      return NextResponse.json(
+        { error: "Akses Ditolak. Hanya Owner yang dapat menghapus transaksi." },
+        { status: 403 }
+      );
+    }
+    
+    const { id } = await params;
+    await prisma.transaction.delete({ where: { id } });
+    return NextResponse.json({ success: true });
+  } catch {
+    return NextResponse.json(
+      { error: "Gagal menghapus transaksi" },
       { status: 500 }
     );
   }
