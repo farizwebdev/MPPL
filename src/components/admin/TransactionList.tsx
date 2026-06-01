@@ -51,7 +51,7 @@ const statusOptions = [
 function TransactionCard({ t }: { t: Transaction }) {
   return (
     <Link
-      href={`/transaksi/${t.id}`}
+      href={`/admin/transaksi/${t.id}`}
       className="block rounded-xl border border-gray-100 bg-white p-4 shadow-xs transition-all hover:border-gray-200 hover:shadow-sm active:scale-[0.98]"
     >
       <div className="flex items-start justify-between gap-2">
@@ -150,7 +150,7 @@ export default function TransactionList({
           </p>
         </div>
         <Link
-          href="/transaksi/baru"
+          href="/admin/transaksi/baru"
           className="group inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white shadow-xs transition-all hover:bg-blue-700 hover:shadow-md"
         >
           <PlusIcon className="h-4 w-4" />
@@ -299,7 +299,7 @@ export default function TransactionList({
                   >
                     <td className="px-5 py-3.5">
                       <Link
-                        href={`/transaksi/${t.id}`}
+                        href={`/admin/transaksi/${t.id}`}
                         className="font-medium text-blue-600 transition-colors hover:text-blue-700"
                       >
                         {t.receiptCode}

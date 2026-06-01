@@ -12,10 +12,10 @@ import {
 } from "./AdminIcons";
 
 const navItems = [
-  { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
-  { href: "/transaksi", label: "Transaksi", icon: TransactionIcon },
-  { href: "/transaksi/baru", label: "Transaksi Baru", icon: PlusIcon },
-  { href: "/laporan", label: "Laporan", icon: ReportIcon },
+  { href: "/admin/dashboard", label: "Dashboard", icon: DashboardIcon },
+  { href: "/admin/transaksi", label: "Transaksi", icon: TransactionIcon },
+  { href: "/admin/transaksi/baru", label: "Transaksi Baru", icon: PlusIcon },
+  { href: "/admin/laporan", label: "Laporan", icon: ReportIcon },
 ];
 
 export default function Sidebar() {
@@ -63,7 +63,7 @@ export default function Sidebar() {
 
           {/* Logo */}
           <div className="relative border-b border-gray-100 px-6 py-6">
-            <Link href="/dashboard" className="flex items-center gap-3">
+            <Link href="/admin/dashboard" className="flex items-center gap-3">
               <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-blue-600 to-blue-700 text-white shadow-sm">
                 <svg viewBox="0 0 28 28" fill="none" className="h-4.5 w-4.5" aria-hidden="true">
                   <rect x="4" y="8" width="20" height="16" rx="4" stroke="currentColor" strokeWidth="1.8" />

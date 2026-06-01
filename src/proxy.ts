@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const adminPaths = ["/dashboard", "/transaksi", "/laporan"];
+const adminPaths = ["/admin/dashboard", "/admin/transaksi", "/admin/laporan"];
 const publicPaths = ["/login", "/api/auth/login", "/api/auth/logout", "/api/auth/check"];
 
 export function proxy(request: NextRequest) {

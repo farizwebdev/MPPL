@@ -122,7 +122,7 @@ export default function TransactionDetail({
         }`}
       >
         <button
-          onClick={() => router.push("/transaksi")}
+          onClick={() => router.push("/admin/transaksi")}
           className="group mb-3 inline-flex items-center gap-1.5 text-sm text-gray-500 transition-colors hover:text-gray-700"
         >
           <BackIcon className="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" />

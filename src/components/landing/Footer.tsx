@@ -38,7 +38,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/dashboard"
+                  href="/admin/dashboard"
                   className="text-sm text-gray-500 transition-colors hover:text-white"
                 >
                   Admin Login
