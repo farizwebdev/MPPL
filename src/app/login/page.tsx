@@ -10,16 +10,18 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  async function handleSubmit(e?: React.FormEvent) {
-    if (e) e.preventDefault();
+  async function performLogin(u: string, p: string) {
     setError("");
     setLoading(true);
+    // Jika lewat demo button, pastikan input state ikut berubah secara visual
+    setUsername(u);
+    setPassword(p);
 
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: u, password: p }),
       });
 
       if (res.ok) {
@@ -33,6 +35,11 @@ export default function LoginPage() {
     } finally {
       setLoading(false);
     }
+  }
+
+  async function handleSubmit(e?: React.FormEvent) {
+    if (e) e.preventDefault();
+    await performLogin(username, password);
   }
 
   return (
@@ -70,42 +77,40 @@ export default function LoginPage() {
           </p>
         </div>
 
-        {/* Login Form Prototype */}
+        {/* Login Form */}
         <div className="rounded-2xl border border-gray-100 bg-white p-7 shadow-xs">
-          <div className="space-y-4">
-            <p className="text-center text-sm text-gray-500 mb-6">Pilih akses prototipe:</p>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="username">
+                Username
+              </label>
+              <input
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                disabled={loading}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Masukkan username Anda"
+              />
+            </div>
             
-            <button
-              onClick={() => { setUsername("karyawan"); setPassword("karyawan123"); setTimeout(handleSubmit, 100); }}
-              disabled={loading}
-              className="flex w-full items-center justify-between rounded-xl border-2 border-blue-100 bg-blue-50/50 p-4 transition-all hover:border-blue-500 hover:bg-blue-50"
-            >
-              <div className="text-left">
-                <p className="font-semibold text-blue-900">Masuk sebagai Karyawan</p>
-                <p className="text-xs text-blue-600/70">Akses operasional kasir & status</p>
-              </div>
-              <div className="rounded-full bg-blue-100 p-2 text-blue-600">
-                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </button>
-
-            <button
-              onClick={() => { setUsername("owner"); setPassword("owner123"); setTimeout(handleSubmit, 100); }}
-              disabled={loading}
-              className="flex w-full items-center justify-between rounded-xl border-2 border-purple-100 bg-purple-50/50 p-4 transition-all hover:border-purple-500 hover:bg-purple-50"
-            >
-              <div className="text-left">
-                <p className="font-semibold text-purple-900">Masuk sebagai Owner</p>
-                <p className="text-xs text-purple-600/70">Akses penuh & laporan keuangan</p>
-              </div>
-              <div className="rounded-full bg-purple-100 p-2 text-purple-600">
-                <svg viewBox="0 0 24 24" fill="none" className="h-5 w-5">
-                  <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
-            </button>
+            <div>
+              <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="password">
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                disabled={loading}
+                className="w-full rounded-xl border border-gray-300 px-4 py-3 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="Masukkan password Anda"
+              />
+            </div>
 
             {error && (
               <div className="mt-4 rounded-xl border border-red-100 bg-red-50 px-4 py-3">
@@ -118,10 +123,37 @@ export default function LoginPage() {
                 </div>
               </div>
             )}
-            
-            <form onSubmit={handleSubmit} className="hidden">
-               {/* Hidden form to maintain original handleSubmit logic */}
-            </form>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="mt-6 flex w-full items-center justify-center rounded-xl bg-blue-600 px-4 py-3 text-sm font-semibold text-white transition-all hover:bg-blue-700 disabled:opacity-50"
+            >
+              {loading ? "Memproses..." : "Masuk"}
+            </button>
+          </form>
+
+          {/* Quick Demo Buttons for Prototype */}
+          <div className="mt-6 border-t border-gray-100 pt-5">
+            <p className="mb-3 text-center text-xs font-medium text-gray-500">Prototipe Akses Cepat</p>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={() => performLogin("owner", "owner123")}
+                disabled={loading}
+                className="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-xs font-semibold text-gray-700 transition-all hover:bg-gray-100 hover:border-gray-300 disabled:opacity-50"
+              >
+                Masuk Owner
+              </button>
+              <button
+                type="button"
+                onClick={() => performLogin("karyawan", "karyawan123")}
+                disabled={loading}
+                className="flex-1 rounded-lg border border-gray-200 bg-gray-50 px-3 py-2.5 text-xs font-semibold text-gray-700 transition-all hover:bg-gray-100 hover:border-gray-300 disabled:opacity-50"
+              >
+                Masuk Karyawan
+              </button>
+            </div>
           </div>
         </div>
 
